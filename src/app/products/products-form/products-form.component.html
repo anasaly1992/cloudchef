@@ -1,0 +1,51 @@
+<nz-modal [(nzVisible)]="isVisible" nzOkDisabled="true" nzCancelText="Cancel" nzOkText="Add"
+    (nzOnCancel)="handleCancel()">
+    <ng-container *nzModalContent>
+        <h2>{{status === 'add'? 'Add': 'Edit'}}</h2>
+        <form nz-form [formGroup]="validateForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>Title</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..."
+                    [nzErrorTip]="userErrorTpl">
+                    <input nz-input formControlName="name" />
+                    <ng-template #userErrorTpl let-control>
+                        <ng-container *ngIf="control.hasError('required')">
+                            Please input your username!
+                        </ng-container>
+                        <ng-container *ngIf="control.hasError('duplicated')">
+                            The username is redundant!
+                        </ng-container>
+                    </ng-template>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Expire Date</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                    <nz-date-picker formControlName="expire_date"></nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>quantity</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="Please input your password!">
+                    <input nz-input type="number" formControlName="quantity" />
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>Description</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzErrorTip="Please write something here!">
+                    <textarea formControlName="description" nz-input rows="2" placeholder="write any thing"></textarea>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control [nzOffset]="7" [nzSpan]="12">
+                    <button nz-button nzType="primary" (click)="submitData(validateForm)"
+                        [disabled]="validateForm.invalid">Submit</button>
+                    <button nz-button (click)="resetForm()">Reset</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+
+
+    </ng-container>
+</nz-modal>
